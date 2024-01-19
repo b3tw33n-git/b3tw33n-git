@@ -1,0 +1,167 @@
+# modifier key is CAPS or Mod4(look .xinitrc)
+set $mod Mod4
+
+# set font(dependency font and pango lib)
+font pango:monospace 14
+
+# start pulseaudio(dependency pulseaudio)
+exec --no-startup-id pulseaudio -D
+
+# start compositor(dependency picom)
+exec --no-startup-id picom -b --config ~/.config/picom.conf
+
+# set wallpaper(dependency feh)
+exec --no-startup-id feh --bg-scale ~/Pictures/wallpaper.png
+
+# modifier for floating windows
+floating_modifier $mod
+
+# border size and type
+default_border pixel 2
+
+# disabled tiling drag(drug feature)
+tiling_drag off
+
+# disabled window names
+for_window [class=".*"] title_format "<b></b>"
+
+# terminal (dependency kitty or another terminal)
+bindsym $mod+Return exec kitty
+
+# close window
+bindsym $mod+apostrophe kill
+
+# dmenu (dependency dmenu, heh)
+bindsym $mod+period exec "dmenu_run -nf '#959595' -nb '#000000' -sb '#B108A8' -sf '#FFFFFF' -fn 'monospace-10' -p 'Run: '"
+
+# focus window hotkeys
+bindsym $mod+a focus left
+bindsym $mod+o focus down
+bindsym $mod+comma focus up
+bindsym $mod+e focus right
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move window hotkeys
+bindsym $mod+Shift+a move left
+bindsym $mod+Shift+o move down
+bindsym $mod+Shift+comma move up
+bindsym $mod+Shift+e move right
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# split window horizontal on open
+bindsym $mod+p split h
+
+# split window vertical on open
+bindsym $mod+u split v
+
+# toggle fullscreen mode for window
+bindsym $mod+Shift+u fullscreen toggle
+
+# enable stacking layout
+bindsym $mod+semicolon layout stacking
+
+# enable tabbed layout
+bindsym $mod+q layout tabbed
+
+# change split windows(horizontal/vertical) 
+# and enable default layout mode
+bindsym $mod+j layout toggle split
+
+# make window floating
+bindsym $mod+Shift+Space floating toggle
+
+# focus floating window
+bindsym $mod+space focus mode_toggle
+
+# focus parent window
+bindsym $mod+y focus parent
+
+# focus child window
+bindsym $mod+i focus child
+
+# names of workspaces
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+# change workspace hotkeys
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
+
+# move window to workspace hotkeys
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10
+
+# reload i3
+bindsym $mod+Shift+l reload
+
+# restart i3
+bindsym $mod+Shift+n restart
+
+# exit i3
+bindsym $mod+Shift+m exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
+# resize hotkeys
+mode "resize" {
+        bindsym a resize shrink width 10 px or 10 ppt
+        bindsym e resize grow height 10 px or 10 ppt
+        bindsym comma resize shrink height 10 px or 10 ppt
+        bindsym o resize grow width 10 px or 10 ppt
+
+
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+Shift+period mode "default"
+}
+
+bindsym $mod+Shift+period mode "resize"
+
+# colors
+# class                 border  bground text    indicator child_border
+client.focused          #6B0565 #B108A8 #FFFFFF #B108A8   #7C0677
+client.focused_inactive #5B0457 #5B0457 #959595 #5B0457   #5B0457
+client.unfocused        #000000 #000000 #959595 #000000   #000000
+client.urgent           #000000 #FF0BFC #FFFFFF #FF0BFC   #FF0BFC
+client.placeholder      #000000 #2D022B #FFFFFF #2D022B   #000000
+client.background       #000000
+
+# polybar (dependency polybar, heh x2)
+bar {
+        status_command polybar
+	mode invisible
+}
